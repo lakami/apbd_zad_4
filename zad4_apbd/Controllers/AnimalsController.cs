@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using zad4_apbd.Repo;
 
 namespace zad4_apbd.Controllers;
 
@@ -7,10 +8,13 @@ namespace zad4_apbd.Controllers;
 public class AnimalsController : ControllerBase
 {
     private readonly ILogger<AnimalsController> _logger;
+    
+    private readonly IAnimalsRepo _animalsRepo;
 
-    public AnimalsController(ILogger<AnimalsController> logger)
+    public AnimalsController(ILogger<AnimalsController> logger, IAnimalsRepo animalsRepo)
     {
         _logger = logger;
+        _animalsRepo = animalsRepo;
     }
 
     [HttpGet(Name = "GetAnimals")]
