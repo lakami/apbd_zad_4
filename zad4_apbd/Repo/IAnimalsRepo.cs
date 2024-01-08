@@ -6,7 +6,7 @@ public interface IAnimalsRepo
     
     Task<bool> CreateAnimalAsync(Animal animal);
     
-    Task UpdateAnimalAsync(int idAnimal, Animal animal);
+    Task<bool> UpdateAnimalAsync(int idAnimal, Animal animal);
     
-    Task DeleteAnimalAsync(int idAnimal);
+    Task<bool> DeleteAnimalAsync(int idAnimal);
 }

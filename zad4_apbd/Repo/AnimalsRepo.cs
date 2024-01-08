@@ -59,13 +59,49 @@ public class AnimalsRepo : IAnimalsRepo
         }
     }
 
-    public async Task UpdateAnimalAsync(int idAnimal, Animal animal)
+    public async Task<bool> UpdateAnimalAsync(int idAnimal, Animal animal)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await using (var connection = new SqlConnection(_connectionString))
+            await using(var command = new SqlCommand())
+            {
+                command.Connection = connection;
+                command.CommandText = "UPDATE Animal SET Name=@name, Description=@description, Category=@category, Area=@area WHERE IdAnimal=@id";
+                command.Parameters.AddWithValue("id", idAnimal);
+                command.Parameters.AddWithValue("name", animal.Name);
+                command.Parameters.AddWithValue("description", animal.Description ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("category", animal.Category);
+                command.Parameters.AddWithValue("area", animal.Area);
+                await connection.OpenAsync();
+                return await command.ExecuteNonQueryAsync() != 0;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
     }
 
-    public async Task DeleteAnimalAsync(int idAnimal)
+    public async Task<bool> DeleteAnimalAsync(int idAnimal)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await using (var connection = new SqlConnection(_connectionString))
+            await using(var command = new SqlCommand())
+            {
+                command.Connection = connection;
+                command.CommandText = "DELETE FROM Animal WHERE IdAnimal=@id";
+                command.Parameters.AddWithValue("id", idAnimal);
+                await connection.OpenAsync();
+                return await command.ExecuteNonQueryAsync() != 0;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
     }
 }

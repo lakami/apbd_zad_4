@@ -41,15 +41,23 @@ public class AnimalsController : ControllerBase
     }
     
     [HttpPut("{idAnimal}")]
-    public IActionResult UpdateAnimal(int idAnimal, Animal animal)
+    public async Task<IActionResult> UpdateAnimal(int idAnimal, Animal animal)
     {
-        return Ok($"idAnimal={idAnimal}, animal={animal}");
+        if (await _animalsRepo.UpdateAnimalAsync(idAnimal, animal))
+        {
+            return Ok("Zaktualizowano zwierzę");
+        }
+        return BadRequest("Nie udało się zaktualizować zwierzęcia");
     }
     
     [HttpDelete("{idAnimal}")]
-    public IActionResult DeleteAnimal(int idAnimal)
+    public async Task<IActionResult> DeleteAnimal(int idAnimal)
     {
-        return Ok($"idAnimal={idAnimal}");
+        if (await _animalsRepo.DeleteAnimalAsync(idAnimal))
+        {
+            return Ok("Usunięto zwierzę");
+        }
+        return BadRequest("Nie udało się usunąć zwierzęcia");
     }
     
 }
