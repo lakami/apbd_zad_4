@@ -18,7 +18,7 @@ public class AnimalsController : ControllerBase
     }
 
     [HttpGet(Name = "GetAnimals")]
-    public IActionResult GetAnimals(string? orderBy = "name")
+    public async Task<IActionResult> GetAnimals(string? orderBy = "name")
     {
         if (orderBy != "name"
             && orderBy != "description"
@@ -27,13 +27,17 @@ public class AnimalsController : ControllerBase
         {
             return BadRequest("Niepoprawny parametr");
         }
-        return Ok($"orderBy={orderBy}");
+        return Ok(await _animalsRepo.GetAnimalsAsync(orderBy));
     }
     
     [HttpPost]
-    public IActionResult CreateAnimal(Animal animal)
+    public async Task<IActionResult> CreateAnimal(Animal animal)
     {
-        return Ok(animal);
+        if (await _animalsRepo.CreateAnimalAsync(animal))
+        {
+            return Ok("Dodano zwierzę");
+        }
+        return BadRequest("Nie udało się dodać zwierzęcia");
     }
     
     [HttpPut("{idAnimal}")]

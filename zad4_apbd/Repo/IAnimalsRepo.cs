@@ -4,7 +4,7 @@ public interface IAnimalsRepo
 {
     Task<IEnumerable<Animal>> GetAnimalsAsync(string orderBy);
     
-    Task CreateAnimalAsync(Animal animal);
+    Task<bool> CreateAnimalAsync(Animal animal);
     
     Task UpdateAnimalAsync(int idAnimal, Animal animal);
     
