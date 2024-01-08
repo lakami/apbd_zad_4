@@ -26,6 +26,22 @@ public class AnimalsController : ControllerBase
         return Ok($"orderBy={orderBy}");
     }
     
+    [HttpPost]
+    public IActionResult CreateAnimal(Animal animal)
+    {
+        return Ok(animal);
+    }
     
+    [HttpPut("{idAnimal}")]
+    public IActionResult UpdateAnimal(int idAnimal, Animal animal)
+    {
+        return Ok($"idAnimal={idAnimal}, animal={animal}");
+    }
+    
+    [HttpDelete("{idAnimal}")]
+    public IActionResult DeleteAnimal(int idAnimal)
+    {
+        return Ok($"idAnimal={idAnimal}");
+    }
     
 }
