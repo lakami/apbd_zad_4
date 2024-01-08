@@ -1,6 +1,6 @@
 namespace zad4_apbd;
 
-public class WeatherForecast
+public class Animal
 {
     public DateOnly Date { get; set; }
 
