@@ -15,7 +15,6 @@ public class AnimalsRepo : IAnimalsRepo
         {
             command.Connection = connection;
             command.CommandText = $"SELECT * FROM Animal ORDER BY {orderBy} ASC";
-            // command.Parameters.AddWithValue("orderBy", orderBy);
             await connection.OpenAsync();
             var dataReader = await command.ExecuteReaderAsync();
             while (await dataReader.ReadAsync())
